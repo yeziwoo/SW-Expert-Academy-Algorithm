@@ -1,0 +1,44 @@
+/************
+20.04.09
+-그리디: 배열 뒤부터 탐색. 배열 뒤부터 큰 값을 찾고, 그 뒤 더 큰 값이 나올 때까지 누적 
+*result 데이터형 long long으로 해야 함.
+**********/
+#include <stdio.h>
+#include<iostream>
+#include<algorithm>
+#include<string>
+#include<vector>
+using namespace std;
+
+int price[1000000];
+int main() {
+
+	//freopen("input.txt", "r", stdin);
+	int t, n;
+	cin >> t;
+	for (int tc = 1; tc <= t; tc++) {
+		cin >> n;
+		for (int j = 0; j < n; j++) {
+			cin >> price[j];
+		}
+
+		long long result = 0;
+		int maxidx = n - 1;
+		for (int i = n - 2; i >= 0; i--) {
+			if (price[i] > price[maxidx]) {
+				for (int j = i + 1; j < maxidx; j++) {
+					result += price[maxidx] - price[j];
+				}
+				maxidx = i;
+			}
+		}
+		if (price[0] < price[maxidx]) {
+			for (int i = 0; i < maxidx; i++) {
+				result += price[maxidx] - price[i];
+			}
+		}
+		printf("#%d %lld\n", tc, result); //long long 출력하려면 %lld
+	}
+	return 0;
+
+}
